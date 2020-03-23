@@ -1,0 +1,23 @@
+{% extends 'admin/admin-base.html.twig' %}
+
+{% block title %}
+    {{ post.title }}
+{% endblock %}
+
+{% block body %}
+
+    <div class="mt-5">
+        <img class="img-fluid" src="{{ "/uploads/" ~ post.image }}"/>
+        <hr/>
+        <h1>{{ post.title }}</h1>
+        <h5>Category:
+            {{ post.category }}</h5>
+        <p>{{ post.description }}</p>
+        <hr/>
+        <a href="{{ path('edit', {'id': post.id} ) }}" class="btn btn-sm btn-warning">Edit</a>
+        <a href="{{ path('delete', {'id': post.id} ) }}" class="btn btn-sm btn-danger ">Delete</a>
+        <a href="{{ path('posts') }}" class="btn btn-sm btn-primary">
+            Go Back</a>
+    </div>
+
+{% endblock %}

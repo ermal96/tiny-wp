@@ -1,0 +1,59 @@
+{% extends 'admin/admin-base.html.twig' %}
+
+{% block title %}Categories
+{% endblock %}
+
+{% block body %}
+
+    <div class="conatiner-wrapper">
+        {% for message in app.flashes('success') %}
+            <div class="card border-left-success shadow mb-4">
+                <div class="card-body pt-3 pb-3">
+                    <div class="row no-gutters align-items-center">
+                        <div class="col">
+                            <div class="text-sm  text-secondary">{{ message }}</div>
+                        </div>
+                        <div class="col-auto">
+                            <i class="fas fa-check text-success"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+        <a href="{{ path('admin.create.category') }}" class="btn btn-success btn-sm mb-3 ">Add New</a>
+        <div class="mb-3 float-right">
+            {{ knp_pagination_render(categories) }}
+        </div>
+        <table class="table table-hover table-striped m-0 border">
+            <thead>
+                <tr>
+                    <th class="align-middle" scope="col">ID</th>
+                    <th class="align-middle" scope="col">Name</th>
+                    <th class="align-middle" scope="col">Description</th>
+                    <th class="align-middle" scope="col">Actions</th>
+                    <th class="align-middle" scope="col">Date Created</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for category in categories %}
+                    <tr>
+                        <th class="align-middle" scope="row">{{ category.id }}</th>
+                        <td class="align-middle">{{ category.name }}</td>
+                        <td class="align-middle">{{ category.description }}</td>
+                        <td
+                            class="align-middle">
+                            {# <a href="{{path('show', {'id': category.id} )}}" class="text-decoration-none text-secondary mr-2">Show</a> #}
+                            <a href="{{ path('admin.edit.category', {'id': category.id} ) }}" class="text-decoration-none text-success mr-2">Edit</a>
+                            <a href="{{ path('admin.delete.category', {'id': category.id} ) }}" class="text-decoration-none text-danger">Delete</a>
+                        </td>
+                        <td class="align-middle">{{ category.date }}</td>
+                    </tr>
+                {% endfor %}
+
+
+            </tbody>
+        </table>
+    </div>
+
+
+{% endblock %}

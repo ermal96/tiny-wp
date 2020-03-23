@@ -1,0 +1,61 @@
+{% extends 'admin/admin-base.html.twig' %}
+
+{% block title %}Users
+{% endblock %}
+
+{% block body %}
+
+    <div class="conatiner-wrapper">
+        {% for message in app.flashes('success') %}
+            <div class="card border-left-success shadow mb-4">
+                <div class="card-body pt-3 pb-3">
+                    <div class="row no-gutters align-items-center">
+                        <div class="col">
+                            <div class="text-sm  text-secondary">{{ message }}</div>
+                        </div>
+                        <div class="col-auto">
+                            <i class="fas fa-check text-success"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+        <a href="{{ path('register') }}" class="btn btn-success btn-sm mb-3 ">Add New</a>
+        <div class="mb-3 float-right">
+            {{ knp_pagination_render(users) }}
+        </div>
+        <table class="table table-hover table-striped m-0 border">
+            <thead>
+                <tr>
+                    <th class="align-middle" scope="col">ID</th>
+                    <th class="align-middle" scope="col">Username</th>
+                    <th class="align-middle" scope="col">Role</th>
+                    <th class="align-middle" scope="col">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for user in users %}
+                    <tr>
+                        <th class="align-middle" scope="row">{{ user.id }}</th>
+                        <td class="align-middle">{{ user.username }}</td>
+                        <td class="align-middle">
+                            {% for role in user.roles %}
+                                {% if role == 'ROLE_ADMIN' %}
+                                    ADMIN
+                                {% elseif  role == 'ROLE_USER' %}
+                                    USER
+                                {% endif %}
+
+                            {% endfor %}
+                        </td>
+                        <td class="align-middle">
+                            <a href="{{ path('admin.edit.user', {'id': user.id} ) }}" class="text-decoration-none text-success mr-2">Edit</a>
+                            <a href="{{ path('admin.delete.user', {'id': user.id} ) }}" class="text-decoration-none text-danger">Delete</a>
+                        </td>
+                    </tr>
+                {% endfor %}
+
+            </tbody>
+        </table>
+    </div>
+{% endblock %}

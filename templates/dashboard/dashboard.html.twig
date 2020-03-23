@@ -1,0 +1,205 @@
+{% extends "admin/admin-base.html.twig" %}
+{% block title %}Dashboard
+{% endblock %}
+
+{% block body %}
+
+    <!-- Content Wrapper -->
+    <div
+        id="content-wrapper" class="d-flex flex-column bg-white">
+
+        <!-- Begin Page Content -->
+        <div
+            class="container-fluid">
+
+            <!-- Page Heading -->
+            <div class="d-sm-flex align-items-center justify-content-between mb-4">
+                <h1 class="h3 mb-0 text-gray-800">Dashboard</h1>
+            </div>
+
+            <!-- Content Row -->
+            <div
+                class="row">
+                <!-- Posts Block -->
+                <div class="col-xl-4 col-md-6 mb-4">
+                    <div class="card border-left-primary shadow h-100 py-2">
+                        <div class="card-body">
+                            <a class="text-decoration-none" href="{{ path('admin.posts') }}">
+                                <div class="row no-gutters align-items-center">
+                                    <div class="col mr-2">
+                                        <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">All Posts</div>
+                                        <div class="h5 mb-0 font-weight-bold text-gray-800">{{ totalPosts }}</div>
+                                    </div>
+                                    <div class="col-auto">
+                                        <i class="far fa-file-alt fa-2x text-gray-300"></i>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Ctegories Block -->
+                <div class="col-xl-4 col-md-6 mb-4">
+                    <div class="card border-left-success shadow h-100 py-2">
+                        <div class="card-body">
+                            <a href="{{ path('admin.categories') }}" class="text-decoration-none">
+                                <div class="row no-gutters align-items-center">
+                                    <div class="col mr-2">
+                                        <div class="text-xs font-weight-bold text-success text-uppercase mb-1">All Categories</div>
+                                        <div class="h5 mb-0 font-weight-bold text-gray-800">{{ totalCategories }}</div>
+                                    </div>
+                                    <div class="col-auto">
+                                        <i class="fas fa-fw fa-wrench fa-2x text-gray-300"></i>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Users Block -->
+                <div class="col-xl-4 col-md-6 mb-4">
+                    <div class="card border-left-info shadow h-100 py-2">
+                        <div class="card-body">
+                        <a href="{{ path('admin.users') }}" class="text-decoration-none">
+                            <div class="row no-gutters align-items-center">
+                                <div class="col mr-2">
+                                    <div class="text-xs font-weight-bold text-info text-uppercase mb-1">All Users</div>
+                                    <div class="row no-gutters align-items-center">
+                                        <div class="col-auto">
+                                            <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">{{totalUsers}}</div>
+                                        </div>
+                                      
+                                    </div>
+                                </div>
+                                <div class="col-auto">
+                                    <i class="fas fa-users fa-2x text-gray-300"></i>
+                                </div>
+                            </div>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
+            <!-- end Content Row -->
+
+            <!-- Content Row -->
+            <div class="row">
+                <div
+                    class="col-xl-4 col-md-6 mb-4">
+
+                    <!-- Posts -->
+                    <div class="card shadow mb-4">
+                        <div class="card-header py-3">
+                            <h6 class="m-0 font-weight-bold text-primary">Recent Posts</h6>
+                        </div>
+                        <div class="card-body">
+                            <table class="table table-hover table-borderless m-0 ">
+                                <thead>
+                                    <tr>
+                                        <th class="align-middle" scope="col">ID</th>
+                                        <th class="align-middle" scope="col">Title</th>
+                                        <th class="align-middle" scope="col">Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for recentPost in recentPosts %}
+                                        <tr>
+                                            <th class="align-middle" scope="row">{{ recentPost.id }}</th>
+                                            <td class="align-middle ">{{ recentPost.title |slice(0, 15) ~ ' ...' }}</td>
+                                            <td class="align-middle">
+                                                <a href="{{ path('admin.edit.post', {'id': recentPost.id} ) }}" class="text-decoration-none text-success mr-2">Edit</a>
+                                                <a href="{{ path('admin.delete.post', {'id': recentPost.id} ) }}" class="text-decoration-none text-danger">Delete</a>
+                                            </td>
+                                        </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div
+                    class="col-xl-4 col-md-6 mb-4">
+                    <!-- Categories -->
+                    <div class="card shadow mb-4">
+                        <div class="card-header py-3">
+                            <h6 class="m-0 font-weight-bold text-primary">Recent Categories</h6>
+                        </div>
+                        <div class="card-body">
+                            <table class="table table-hover table-borderless m-0 ">
+                                <thead>
+                                    <tr>
+                                        <th class="align-middle" scope="col">ID</th>
+                                        <th class="align-middle" scope="col">Title</th>
+                                        <th class="align-middle" scope="col">Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for recentCategory in recentCategories %}
+                                        <tr>
+                                            <th class="align-middle" scope="row">{{ recentCategory.id }}</th>
+                                            <td class="align-middle">{{ recentCategory.name }}</td>
+                                            <td class="align-middle">
+                                                <a href="{{ path('admin.edit.category', {'id': recentCategory.id} ) }}" class="text-decoration-none text-success mr-2">Edit</a>
+                                                <a href="{{ path('admin.delete.category', {'id': recentCategory.id} ) }}" class="text-decoration-none text-danger">Delete</a>
+                                            </td>
+                                        </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+
+                </div>
+                <div
+                    class="col-xl-4 col-md-6 mb-4">
+
+                    <!-- Users -->
+                    <div class="card shadow mb-4">
+                        <div class="card-header py-3">
+                            <h6 class="m-0 font-weight-bold text-primary">Recent Users</h6>
+                        </div>
+                        <div class="card-body">
+                            <table class="table table-hover table-borderless m-0 ">
+                                <thead>
+                                    <tr>
+                                        <th class="align-middle" scope="col">ID</th>
+                                        <th class="align-middle" scope="col">Title</th>
+                                        <th class="align-middle" scope="col">Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for recentUser in recentUsers %}
+                                        <tr>
+                                            <th class="align-middle" scope="row">{{ recentUser.id }}</th>
+                                            <td class="align-middle">{{ recentUser.name }}</td>
+                                            <td class="align-middle">
+                                                <a href="{{ path('admin.edit.user', {'id': recentUser.id} ) }}" class="text-decoration-none text-success mr-2">Edit</a>
+                                                <a href="{{ path('admin.delete.user', {'id': recentUser.id} ) }}" class="text-decoration-none text-danger">Delete</a>
+                                            </td>
+                                        </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+
+                </div>
+            </div>
+            <!-- end Content Row -->
+        </div>
+
+        <!-- /.container-fluid -->
+
+    </div>
+    <!-- End of Content Wrapper -->
+
+
+{% endblock %}
